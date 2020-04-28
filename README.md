@@ -1,6 +1,7 @@
 # tu2bo-media-srv
 TúTubo - Media Service
 
+
 ## Build y corrida
 
 Para buildear y levantar el servidor, hay 2 alternativas: corriendolo como proceso en la consola o levantando un container.
@@ -10,7 +11,7 @@ De cualquiera de ambas formas, se puede probar si el srv esta levantado, haciend
 
 #### Plano
 
-- `make plain-build`
+- `make plain-install`
 - `make plain-run`
 
 Para salir, `ctrl+c`.
@@ -21,3 +22,11 @@ Para salir, `ctrl+c`.
 - `make run`
 
 Para salir, hacer `ctrl+c` sobre la consola donde se hizo `make run`.
+
+
+## Testing
+
+Para testear, por ahora solamente esta incluida la opcion de hacerlo no-containerizado. Para ello, hacer un install y correr test:
+
+- `make plain-install`
+- `make test`
