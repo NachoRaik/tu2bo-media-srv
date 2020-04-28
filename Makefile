@@ -10,5 +10,8 @@ plain-build:
 plain-run:
 	cd src; npm start;
 
+plain-test:
+	cd src; npm test;
+
 ping:
 	curl -vvv "localhost:3000/ping"

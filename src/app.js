@@ -21,3 +21,6 @@ app.listen(PORT, () => console.log(`App Server levantado en puerto ${PORT}!`))
 process.on('SIGINT', function() {
     process.exit();
 });
+
+
+module.exports = app;
