@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "node"
+sudo: required
+before_install:
+  - cd src
+install:
+  - npm install
+script:
+  - npm test
