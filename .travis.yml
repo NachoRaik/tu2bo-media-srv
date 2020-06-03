@@ -6,7 +6,5 @@ before_install:
   - cd src
 install:
   - npm install
-  - npm install swagger-ui-express --save
-  - npm install swagger-jsdoc --save
 script:
   - npm test
