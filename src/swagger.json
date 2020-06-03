@@ -1,0 +1,337 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Media server for TutuboApp",
+    "version": "1.0.0",
+    "title": "Media Server"
+  },
+  "tags": [
+    {
+      "name": "videos",
+      "description": "Operations about videos"
+    }
+  ],
+  "paths": {
+    "/videos": {
+      "post": {
+        "tags": [
+          "videos"
+        ],
+        "summary": "Add new video",
+        "operationId": "createVideo",
+        "requestBody": {
+          "description": "Created video object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/VideoNew"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Video uploaded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid date / Invalid visibility"
+          },
+          "409": {
+            "description": "Video already uploaded"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "videos"
+        ],
+        "summary": "Get all videos",
+        "description": "",
+        "operationId": "getVideos",
+        "responses": {
+          "200": {
+            "description": "Videos uploaded in Media Server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Video"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/videos/{videoId}": {
+      "get": {
+        "tags": [
+          "videos"
+        ],
+        "summary": "Get video by id",
+        "description": "",
+        "operationId": "getVideoById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "videoId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Video uploaded in Media Server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Video"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Video not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "videos"
+        ],
+        "summary": "Delete video by id",
+        "description": "",
+        "operationId": "deleteVideoById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "videoId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Video deleted successfully"
+          },
+          "404": {
+            "description": "Video not found"
+          }
+        }
+      }
+    },
+    "/videos/user/{userId}": {
+      "get": {
+        "tags": [
+          "videos"
+        ],
+        "summary": "Get all videos uploaded by a user",
+        "description": "",
+        "operationId": "getVideoByUserId",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Videos uploaded by user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Video"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/videos/visibility": {
+      "post": {
+        "tags": [
+          "videos"
+        ],
+        "summary": "Change visibility of a given video",
+        "description": "",
+        "operationId": "changeVisibilityByVideoId",
+        "requestBody": {
+          "description": "Change visibility of a video by its id",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "visibility": {
+                    "type": "string",
+                    "example": "public"
+                  },
+                  "videoId": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Visibility changed successfully"
+          },
+          "400": {
+            "description": "Invalid visibility"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Video": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "user_id": {
+            "type": "integer",
+            "example": 2
+          },
+          "url": {
+            "type": "string",
+            "example": "https://www.tutubo.com/video"
+          },
+          "thumb": {
+            "type": "string",
+            "example": "Thumb of a video"
+          },
+          "author": {
+            "type": "string",
+            "example": "Author"
+          },
+          "title": {
+            "type": "string",
+            "example": "Title of a video"
+          },
+          "description": {
+            "type": "string",
+            "example": "Description of a video"
+          },
+          "visibility": {
+            "type": "string",
+            "example": "public"
+          },
+          "date": {
+            "type": "string",
+            "example": "1/1/2017"
+          }
+        }
+      },
+      "VideoNew": {
+        "type": "object",
+        "required": [
+          "user_id",
+          "url",
+          "author",
+          "title",
+          "visibility",
+          "date"
+        ],
+        "properties": {
+          "user_id": {
+            "type": "integer",
+            "example": 2
+          },
+          "url": {
+            "type": "string",
+            "example": "https://www.tutubo.com/video"
+          },
+          "thumb": {
+            "type": "string",
+            "example": "Thumb of a video"
+          },
+          "author": {
+            "type": "string",
+            "example": "Author"
+          },
+          "title": {
+            "type": "string",
+            "example": "Title of a video"
+          },
+          "description": {
+            "type": "string",
+            "example": "Description of a video"
+          },
+          "visibility": {
+            "type": "string",
+            "example": "public"
+          },
+          "date": {
+            "type": "string",
+            "example": "1/1/2017"
+          }
+        }
+      }
+    }
+  }
+}

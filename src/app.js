@@ -1,7 +1,7 @@
 const express = require('express')
-const swaggerJsdoc = require('swagger-jsdoc');
-const documentation = require('./documentation');
 const swaggerUi = require('swagger-ui-express');
+var swaggerDocument = require('./swagger.json');
+
 const app = express()
 
 const HOST = "localhost"
@@ -23,13 +23,6 @@ process.on('SIGINT', function() {
     process.exit();
 });
 
-const specs = swaggerJsdoc(documentation.options);
-
-app.use("/docs", swaggerUi.serve);
-
-app.get("/docs", swaggerUi.setup(specs, {
-    explorer: true
-  })
-);
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 module.exports = app;
