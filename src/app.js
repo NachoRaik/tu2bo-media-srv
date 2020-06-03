@@ -7,16 +7,16 @@ const PORT = 3000;
 
 app.get('/', (req, res) => {
 	res.status(200)
-	res.send('Hola! Le estas pegando a '+ HOST + ':' + PORT + ', donde vive el App Server!')
+	res.send('Hi! You are hitting '+ HOST + ':' + PORT + ', where lives the Media Server!')
 });
 
 app.get('/ping', (req, res) => {
 	res.status(200)
-	res.send('Estoy vivo')
+	res.send('Im alive')
 });
 
 
-app.listen(PORT, () => console.log(`App Server levantado en puerto ${PORT}!`))
+app.listen(PORT, () => console.log(`Media server up in port ${PORT}!`))
 
 process.on('SIGINT', function() {
     process.exit();
