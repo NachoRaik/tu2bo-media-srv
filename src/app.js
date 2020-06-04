@@ -1,6 +1,6 @@
 const express = require('express')
 const swaggerUi = require('swagger-ui-express');
-var swaggerDocument = require('./swagger.json');
+const swaggerDocument = require('./swagger.json');
 
 const app = express()
 
