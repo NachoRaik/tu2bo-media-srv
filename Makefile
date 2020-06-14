@@ -1,9 +1,9 @@
-.PHONY: plain-install
-plain-install:
+.PHONY: install
+install:
 	cd src; npm install;
 
-.PHONY: plain-run
-plain-run:
+.PHONY: run
+run:
 	cd src; npm start;
 
 .PHONY: test
