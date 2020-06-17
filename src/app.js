@@ -1,28 +1,19 @@
-const express = require('express')
+const express = require('express');
+const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
-const app = express()
+const monitoringRouter = require('./routes/monitoringRouter');
+const videosRouter = require('./routes/videosRouter');
 
-const HOST = "localhost"
-const PORT = 3000;
+module.exports = function app() {
+  const app = express();
 
-app.get('/', (req, res) => {
-	res.status(200)
-	res.send('Hi! You are hitting '+ HOST + ':' + PORT + ', where lives the Media Server!')
-});
+  app.disable('x-powered-by');
+  app.use(bodyParser.json());
+  app.use(videosRouter());
+  app.use(monitoringRouter());
+  app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.get('/ping', (req, res) => {
-	res.status(200)
-	res.send('Im alive')
-});
-
-app.listen(PORT, () => console.log(`Media server up in port ${PORT}!`))
-
-process.on('SIGINT', function() {
-    process.exit();
-});
-
-app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-module.exports = app;
+  return app;
+};

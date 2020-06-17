@@ -4,16 +4,35 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "./node_modules/.bin/mocha 'test/*.js' --reporter spec --exit"
+    "start": "node main.js",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
-    "mocha": "^5.2.0",
-    "chai": "^4.2.0",
-    "chai-http": "^4.2.0",
-    "swagger-ui-express": "^4.1.4"
+    "express-validator": "^6.3.0",
+    "body-parser": "^1.18.0",
+    "swagger-ui-express": "^4.1.4",
+    "dotenv": "^8.1.0"
+  },
+  "devDependencies": {
+    "jest": "^26.0.1",
+    "prettier": "2.0.5"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "lcov",
+      "text"
+    ]
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "bracketSpacing": true,
+    "printWidth": 120,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "none"
   }
 }

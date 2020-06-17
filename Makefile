@@ -1,17 +1,9 @@
-.PHONY: build
-build:
-	docker build -t tu2bo-app-server .
+.PHONY: install
+install:
+	cd src; npm install;
 
 .PHONY: run
 run:
-	docker run -it -p 3000:3000 tu2bo-app-server 
-
-.PHONY: plain-install
-plain-install:
-	cd src; npm install;
-
-.PHONY: plain-run
-plain-run:
 	cd src; npm start;
 
 .PHONY: test
@@ -20,8 +12,7 @@ test:
 
 .PHONY: ping
 ping:
-	curl -vvv "localhost:3000/ping"
-
+	curl -vvv "localhost:5005/ping"
 
 .PHONY: help
 help:

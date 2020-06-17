@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: ./src
+      dockerfile: Dockerfile.web
+    environment: 
+      - PORT=5005
+    ports:
+      - "5005:5005"
+  
+  mediaserver-db:
+    image: mongo:3.6.4
