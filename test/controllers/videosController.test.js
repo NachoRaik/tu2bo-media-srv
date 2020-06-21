@@ -83,12 +83,11 @@ describe('add', () => {
     });
 
     test('should respond successfully', async () => {
-      videosController.add(req, res, next).then(() => {
-        expect(videoHandler.videoExists).toHaveBeenCalledWith(req.body);
-        expect(videoHandler.addVideo).toHaveBeenCalledWith(req.body);
-        expect(res.status).toHaveBeenCalledWith(201);
-        expect(res.json).toHaveBeenCalledWith({ id: video.id });
-      });
+      await videosController.add(req, res, next);
+      expect(videoHandler.videoExists).toHaveBeenCalledWith(req.body);
+      expect(videoHandler.addVideo).toHaveBeenCalledWith(req.body);
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({ id: video.id });
     });
   });
 
@@ -114,11 +113,10 @@ describe('add', () => {
     });
 
     test('should respond with internal error', async () => {
-      videosController.add(req, res, next).then(() => {
-        expect(videoHandler.videoExists).toHaveBeenCalledWith(req.body);
-        expect(res.status).toHaveBeenCalledWith(500);
-        expect(res.json).toHaveBeenCalledWith({ reason: 'DB Error' });
-      });
+      await videosController.add(req, res, next);
+      expect(videoHandler.videoExists).toHaveBeenCalledWith(req.body);
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ reason: 'DB Error' });
     });
   });
 });

@@ -5,16 +5,13 @@ module.exports = function videosController(videoHandler) {
   };
 
   const get = async (req, res, next) => {
-    videoHandler.findVideo(req.query)
-      .then(videos => {
-        res.status(200).json(videos);
-        next();
-      })
+    return videoHandler.findVideo(req.query)
+      .then(videos => res.status(200).json(videos))
       .catch(err => errorDB(res, err));
   };
 
   const add = async (req, res, next) => {
-    videoHandler.videoExists(req.body)
+    return videoHandler.videoExists(req.body)
       .then(video => {
         if (video) {
           return res.status(409).json({ reason: 'Video already uploaded' });
@@ -32,14 +29,12 @@ module.exports = function videosController(videoHandler) {
 
   const update = async (req, res, next) => {
     // Implement
-    res.status(200).send('ok');
-    next();
+    return res.status(200).send('ok');
   };
 
   const remove = (req, res, next) => {
     // Implement
-    res.status(204).send('ok');
-    next();
+    return res.status(204).send('ok');
   };
 
   return {
