@@ -1,6 +1,8 @@
 const express = require('express');
-const videosController = require('../controllers/videosController')();
 const bodyValidator = require('../middlewares/bodyValidatorMiddleware')();
+const videoHandler = require('../models/handlers/VideoHandler');
+
+const videosController = require('../controllers/videosController')(videoHandler());
 
 module.exports = function videosRouter() {
 

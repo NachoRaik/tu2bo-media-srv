@@ -1,42 +1,36 @@
-const Video = require('../models/Video');
-
-module.exports = function videosController() {
-  const get = (req, res, next) => {
-    Video.find(req.query, '-_id -__v', (err, videos) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({ reason: 'DB Error' });
-      }
-
-      res.status(200).json(videos);
-      next();
-    });
+module.exports = function videosController(videoHandler) {
+  const errorDB = (res, err) => { 
+    console.log(err);
+    return res.status(500).json({ reason: 'DB Error' });
   };
-  
-  const add = (req, res, next) => {
-    Video.findOne({ url: req.body.url }, (err, video) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({ reason: 'DB Error' });
-      }
 
-      if (video) {
-        return res.status(409).json({ reason: 'Video already uploaded' });
-      }
+  const get = async (req, res, next) => {
+    videoHandler.findVideo(req.query)
+      .then(videos => {
+        res.status(200).json(videos);
+        next();
+      })
+      .catch(err => errorDB(res, err));
+  };
 
-      let newVideo = new Video(req.body);
-      newVideo.save(err => {
-        if (err) {
-          console.log('Error while saving new video');
-          return res.status(500).json({ reason: 'DB Error' });
+  const add = async (req, res, next) => {
+    videoHandler.videoExists(req.body)
+      .then(video => {
+        if (video) {
+          return res.status(409).json({ reason: 'Video already uploaded' });
         }
-      });
-      res.status(201).send('ok');
-      next();
-    });
+        
+        videoHandler.addVideo(req.body)
+          .then(video => {
+            res.status(201).json({ id: video.id });
+            next();
+          })
+          .catch(err => errorDB(res, err));
+      })
+      .catch(err => errorDB(res, err));
   };
 
-  const update = (req, res, next) => {
+  const update = async (req, res, next) => {
     // Implement
     res.status(200).send('ok');
     next();

@@ -1,6 +1,4 @@
 const videosControllerFactory = require('../../src/controllers/videosController');
-const Video = require('../../src/models/Video');
-const dbHandler = require('../dbHandler');
 
 let req;
 let res;
@@ -16,18 +14,13 @@ let date = '09/19/18 13:00:05';
 let description = 'Quite descripting text';
 let thumb = 'images.com/123';
 
-
-/* Connect to a new in-memory database before running any tests. */
-beforeAll(async () => await dbHandler.connect());
-
-/* Clear all test data after every test. */
-afterEach(async () => await dbHandler.clearDatabase());
-
-/* Remove and close the db and server. */
-afterAll(async () => await dbHandler.closeDatabase());
-
 beforeEach(() => {
-  videosController = videosControllerFactory();
+  videoHandler = {
+    findVideo: jest.fn(),
+    videoExists: jest.fn(),
+    addVideo: jest.fn()
+  }
+  videosController = videosControllerFactory(videoHandler);
   req = {
     body: {},
     params: {},
@@ -57,8 +50,7 @@ describe('get', () => {
 
   describe('when videos are retrieved', () => {
     beforeEach(() => {
-      req.body = video;
-      videosController.add(req, res, next);
+      videoHandler.findVideo.mockResolvedValue([video]);
     });
 
     test('should respond successfully', async () => {
@@ -86,12 +78,47 @@ describe('add', () => {
   describe('when a correct video is added', () => {
     beforeEach(() => {
       req.body = video;
+      videoHandler.videoExists.mockResolvedValue(null);
+      videoHandler.addVideo.mockResolvedValue(video);
     });
 
     test('should respond successfully', async () => {
+      videosController.add(req, res, next).then(() => {
+        expect(videoHandler.videoExists).toHaveBeenCalledWith(req.body);
+        expect(videoHandler.addVideo).toHaveBeenCalledWith(req.body);
+        expect(res.status).toHaveBeenCalledWith(201);
+        expect(res.json).toHaveBeenCalledWith({ id: video.id });
+      });
+    });
+  });
+
+  describe('when a video is already uploaded', () => {
+    beforeEach(() => {
+      req.body = video;
+      videoHandler.videoExists.mockResolvedValue(video);
+    });
+
+    test('should respond with conflict', async () => {
       await videosController.add(req, res, next);
-      expect(res.status).toHaveBeenCalledWith(201);
-      expect(res.send).toHaveBeenCalledWith('ok');
+      expect(videoHandler.videoExists).toHaveBeenCalledWith(req.body);
+      expect(videoHandler.addVideo).not.toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.json).toHaveBeenCalledWith({ reason: 'Video already uploaded' });
+    });
+  });
+
+  describe('when there is a DB error', () => {
+    beforeEach(() => {
+      req.body = video;
+      videoHandler.videoExists.mockRejectedValue(new Error('crash!'));
+    });
+
+    test('should respond with internal error', async () => {
+      videosController.add(req, res, next).then(() => {
+        expect(videoHandler.videoExists).toHaveBeenCalledWith(req.body);
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.json).toHaveBeenCalledWith({ reason: 'DB Error' });
+      });
     });
   });
 });
