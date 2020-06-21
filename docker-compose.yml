@@ -9,6 +9,8 @@ services:
       - PORT=5005
     ports:
       - "5005:5005"
+    depends_on:
+      - mediaserver-db
   
   mediaserver-db:
     image: mongo:3.6.4

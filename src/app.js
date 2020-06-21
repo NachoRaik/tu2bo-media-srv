@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+const swaggerDocument = require('./static/swagger.json');
 
 const monitoringRouter = require('./routes/monitoringRouter');
 const videosRouter = require('./routes/videosRouter');

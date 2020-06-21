@@ -9,6 +9,7 @@ module.exports = function videosRouter() {
     express.Router()
       .get('/', videosController.get)
       .post('/', bodyValidator.addValidations, bodyValidator.validate, videosController.add)
-      .delete('/:video_id/ready', videosController.remove)
+      .put('/:video_id', videosController.update)
+      .delete('/:video_id', videosController.remove)
   );
 };
