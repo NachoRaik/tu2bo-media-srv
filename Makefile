@@ -1,14 +1,14 @@
 .PHONY: install
 install:
-	cd src; npm install;
+	npm install;
 
 .PHONY: run
-run:
-	cd src; npm start;
+run: install
+	npm start;
 
 .PHONY: test
 test:
-	cd src; npm test;
+	npm test;
 
 
 # -- Heroku related commands

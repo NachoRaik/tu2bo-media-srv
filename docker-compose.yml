@@ -3,7 +3,7 @@ version: "3"
 services:
   app:
     build:
-      context: ./src
+      context: .
       dockerfile: Dockerfile.web
     environment: 
       - PORT=5005

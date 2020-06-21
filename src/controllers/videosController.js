@@ -38,7 +38,7 @@ module.exports = function videosController() {
 
   const update = (req, res, next) => {
     // Implement
-    res.status(204).send('ok');
+    res.status(200).send('ok');
     next();
   };
 
