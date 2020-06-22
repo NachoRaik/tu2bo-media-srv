@@ -2,7 +2,12 @@ const { body , validationResult } = require('express-validator');
 
 module.exports = function bodyValidatorMiddleware() {
   const addValidations = [
-    body(['author', 'user_id', 'url', 'title', 'visibility', 'date'], 'Missing value').exists()
+    body(['author', 'user_id', 'url', 'title', 'visibility', 'date'], 'Missing value').exists(),
+    body(['visibility'], 'Invalid visibility').isIn(['public', 'private'])
+  ];
+  const updateValidations = [
+    body(['author', 'user_id', 'url', 'date'], 'Invalid values').not().exists(),
+    body(['visibility'], 'Invalid visibility').isIn(['public', 'private'])
   ];
 
   const validate = (req, res, next) => {
@@ -17,6 +22,7 @@ module.exports = function bodyValidatorMiddleware() {
 
   return {
     addValidations,
+    updateValidations,
     validate
   };
 };    
