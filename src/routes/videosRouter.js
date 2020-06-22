@@ -11,7 +11,8 @@ module.exports = function videosRouter() {
     express.Router()
       .get('/', videosController.get)
       .post('/', bodyValidator.addValidations, bodyValidator.validate, videosController.add)
-      .put('/:video_id', videosController.update)
-      .delete('/:video_id', videosController.remove)
+      .get('/:videoId', videosController.getSingleVideo)
+      .put('/:videoId', bodyValidator.updateValidations, bodyValidator.validate, videosController.update)
+      .delete('/:videoId', videosController.remove)
   );
 };
