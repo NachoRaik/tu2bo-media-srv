@@ -6,7 +6,9 @@ COPY package.json ./
 
 RUN npm install
 
-COPY . .
+COPY main.js .
+COPY .env .
+COPY src/ src/
 
 EXPOSE 5005
 

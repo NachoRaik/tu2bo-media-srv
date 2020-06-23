@@ -13,11 +13,14 @@
     "express": "^4.16.4",
     "express-validator": "^6.3.0",
     "body-parser": "^1.18.0",
+    "mongoose": "^5.9.10",
+    "mongoose-sequence": "^5.2.1",
     "swagger-ui-express": "^4.1.4",
     "dotenv": "^8.1.0"
   },
   "devDependencies": {
     "jest": "^26.0.1",
+    "mongodb-memory-server": "^6.6.1",
     "prettier": "2.0.5"
   },
   "jest": {

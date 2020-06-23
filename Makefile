@@ -1,14 +1,28 @@
 .PHONY: install
 install:
-	cd src; npm install;
+	npm install;
 
 .PHONY: run
-run:
-	cd src; npm start;
+run: install
+	npm start;
 
 .PHONY: test
 test:
-	cd src; npm test;
+	npm test;
+
+
+# -- Heroku related commands
+# You need to be logged in Heroku CLI before doing this
+#   heroku login
+#   heroku container:login
+.PHONY: heroku-push
+heroku-push:
+	heroku container:push web --recursive --app=$(HEROKU_APP_NAME) --verbose
+
+.PHONY: heroku-release
+heroku-release:
+	heroku container:release web --app $(HEROKU_APP_NAME) --verbose
+
 
 .PHONY: ping
 ping:
