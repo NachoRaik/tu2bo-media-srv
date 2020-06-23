@@ -6,7 +6,7 @@ module.exports = function bodyValidatorMiddleware() {
     body(['visibility'], 'Invalid visibility').isIn(['public', 'private'])
   ];
   const updateValidations = [
-    body(['author', 'user_id', 'url', 'date'], 'Invalid values').not().exists(),
+    body(['id', 'author', 'user_id', 'url', 'date'], 'Invalid values').not().exists(),
     body(['visibility'], 'Invalid visibility').isIn(['public', 'private'])
   ];
 
@@ -14,7 +14,7 @@ module.exports = function bodyValidatorMiddleware() {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       let firstError = errors.array()[0];
-      return res.status(400).json({ reason: firstError });
+      return res.status(400).json({ reason: firstError.msg });
     }
 
     next();
