@@ -53,7 +53,7 @@
             }
           },
           "400": {
-            "description": "Invalid date / Invalid visibility"
+            "description": "Missing fields / Invalid visibility"
           },
           "409": {
             "description": "Video already uploaded"
@@ -99,13 +99,7 @@
         "operationId": "getVideoById",
         "parameters": [
           {
-            "in": "path",
-            "name": "videoId",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "minimum": 1
-            }
+            "$ref": "#/components/parameters/pathVideoId"
           }
         ],
         "responses": {
@@ -129,6 +123,42 @@
           }
         }
       },
+      "put": {
+        "tags": [
+          "videos"
+        ],
+        "summary": "Delete video by id",
+        "description": "",
+        "operationId": "editVideo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pathVideoId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Video edited successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Video"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid fields / Invalid visibility"
+          },
+          "404": {
+            "description": "Video not found"
+          }
+        }
+      },
       "delete": {
         "tags": [
           "videos"
@@ -138,13 +168,7 @@
         "operationId": "deleteVideoById",
         "parameters": [
           {
-            "in": "path",
-            "name": "videoId",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "minimum": 1
-            }
+            "$ref": "#/components/parameters/pathVideoId"
           }
         ],
         "responses": {
@@ -156,95 +180,20 @@
           }
         }
       }
-    },
-    "/videos/user/{userId}": {
-      "get": {
-        "tags": [
-          "videos"
-        ],
-        "summary": "Get all videos uploaded by a user",
-        "description": "",
-        "operationId": "getVideoByUserId",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "userId",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "minimum": 1
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Videos uploaded by user",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/Video"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User not found"
-          }
-        }
-      }
-    },
-    "/videos/visibility": {
-      "post": {
-        "tags": [
-          "videos"
-        ],
-        "summary": "Change visibility of a given video",
-        "description": "",
-        "operationId": "changeVisibilityByVideoId",
-        "requestBody": {
-          "description": "Change visibility of a video by its id",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "visibility": {
-                    "type": "string",
-                    "example": "public"
-                  },
-                  "videoId": {
-                    "type": "integer",
-                    "example": 1
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Visibility changed successfully"
-          },
-          "400": {
-            "description": "Invalid visibility"
-          },
-          "404": {
-            "description": "User not found"
-          }
-        }
-      }
     }
   },
   "components": {
+    "parameters": {
+      "pathVideoId": {
+        "in": "path",
+        "name": "videoId",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
     "schemas": {
       "Video": {
         "type": "object",
