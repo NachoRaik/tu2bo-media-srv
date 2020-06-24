@@ -1,3 +1,5 @@
+HEROKU_APP_NAME := tutubo-media-server
+
 .PHONY: install
 install:
 	npm install;

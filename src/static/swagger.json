@@ -135,6 +135,22 @@
             "$ref": "#/components/parameters/pathVideoId"
           }
         ],
+        "requestBody": {
+          "description": "Edit video object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/EditVideo"
+                  }
+                ]
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Video edited successfully",
@@ -278,6 +294,27 @@
           "date": {
             "type": "string",
             "example": "1/1/2017"
+          }
+        }
+      },
+      "EditVideo": {
+        "type": "object",
+        "properties": {
+          "thumb": {
+            "type": "string",
+            "example": "Thumb of a video"
+          },
+          "title": {
+            "type": "string",
+            "example": "Title of a video"
+          },
+          "description": {
+            "type": "string",
+            "example": "Description of a video"
+          },
+          "visibility": {
+            "type": "string",
+            "example": "public"
           }
         }
       }
