@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./static/swagger.json');
@@ -8,6 +9,7 @@ const videosRouter = require('./routes/videosRouter');
 
 module.exports = function app() {
   const app = express();
+  app.use(cors());
 
   app.disable('x-powered-by');
   app.use(bodyParser.json());
