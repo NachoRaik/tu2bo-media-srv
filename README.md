@@ -23,6 +23,9 @@ Para salir, `ctrl+c`.
 
 Para salir, hacer `ctrl+c` sobre la consola donde se hizo `make run`.
 
+Other way:
+
+- `./run.sh`
 
 ## Testing
 
