@@ -34,9 +34,16 @@ module.exports = function statsController(config, statsHandler) {
       .catch(err => errorDB(res, err));
   };
 
+  const visibilityStats = async (req, res, next) => {
+    let countPublicVideos = await statsHandler.currentCountPublicVideos();
+    let countPrivateVideos = await statsHandler.currentCountPrivateVideos();
+    return res.status(200).json({ public: countPublicVideos, private: countPrivateVideos });
+  };
+
   return {
     videoStats,
-    addStat
+    addStat,
+    visibilityStats
   };
 };
   

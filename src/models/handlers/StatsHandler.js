@@ -8,7 +8,7 @@ module.exports = function StatsHandler() {
   };
 
   const getEntriesSince = async (sinceDate) => {
-    return VideoStat.find({date: {$gt: sinceDate}}, '-_id -__v');
+    return VideoStat.find({ date: {$gt: sinceDate }}, '-_id -__v');
   };
 
   const getLastEntry = async () => {
@@ -19,11 +19,21 @@ module.exports = function StatsHandler() {
     return Video.countDocuments({});
   };
 
+  const currentCountPublicVideos = async () => {
+    return Video.countDocuments({ visibility: 'public' });
+  };
+
+  const currentCountPrivateVideos = async () => {
+    return Video.countDocuments({ visibility: 'private' });
+  };
+
   return {
     addHistoricEntry,
     getEntriesSince,
     getLastEntry,
-    currentCount
+    currentCount,
+    currentCountPublicVideos,
+    currentCountPrivateVideos
   };
 };
     
