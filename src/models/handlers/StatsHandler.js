@@ -15,16 +15,8 @@ module.exports = function StatsHandler() {
     return VideoStat.findOne().sort({ _id: -1 });
   };
   
-  const currentCount = async () => {
-    return Video.countDocuments({});
-  };
-
-  const currentCountPublicVideos = async () => {
-    return Video.countDocuments({ visibility: 'public' });
-  };
-
-  const currentCountPrivateVideos = async () => {
-    return Video.countDocuments({ visibility: 'private' });
+  const currentCount = async (query) => {
+    return Video.countDocuments(query);
   };
 
   return {
