@@ -188,7 +188,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "Video deleted successfully"
           },
           "404": {
