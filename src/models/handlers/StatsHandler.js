@@ -24,8 +24,6 @@ module.exports = function StatsHandler() {
     getEntriesSince,
     getLastEntry,
     currentCount,
-    currentCountPublicVideos,
-    currentCountPrivateVideos
   };
 };
     
