@@ -6,7 +6,7 @@ module.exports = function VideoHandler() {
   };
 
   const findVideo = async (videoId) => {
-    return Video.findOne({ id: videoId }, '-_id -__v');
+    return Video.findOne({ id: videoId, visibility: { $ne: "blocked" } }, '-_id -__v');
   };
 
   const videoExists = async (content) => {
