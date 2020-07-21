@@ -196,6 +196,68 @@
           }
         }
       }
+    },
+    "/stats/historic_count": {
+      "get": {
+        "tags": [
+          "videos"
+        ],
+        "summary": "Get number of videos through time",
+        "description": "",
+        "operationId": "getHistoricCount",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pathDate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Num of videos uploaded in Media Server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/HistoricCount"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats/visibility": {
+      "get": {
+        "tags": [
+          "videos"
+        ],
+        "summary": "Get number of videos according to its visibility",
+        "description": "",
+        "operationId": "getVisibility",
+        "responses": {
+          "200": {
+            "description": "Num of videos in Media Server",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Visibility"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -207,6 +269,14 @@
         "schema": {
           "type": "integer",
           "minimum": 1
+        }
+      },
+      "pathDate": {
+        "in": "path",
+        "name": "date",
+        "required": true,
+        "schema": {
+          "type": "string"
         }
       }
     },
@@ -315,6 +385,36 @@
           "visibility": {
             "type": "string",
             "example": "public"
+          }
+        }
+      },
+      "HistoricCount": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "example": "2020-07-20T23:57:40.420Z"
+          },
+          "count": {
+            "type": "integer",
+            "example": 20
+          }
+        }
+      },
+      "Visibility": {
+        "type": "object",
+        "properties": {
+          "public": {
+            "type": "integer",
+            "example": 1
+          },
+          "private": {
+            "type": "integer",
+            "example": 1
+          },
+          "blocked": {
+            "type": "integer",
+            "example": 2
           }
         }
       }
