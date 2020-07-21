@@ -213,3 +213,62 @@ describe('remove', () => {
     });
   });
 });
+
+
+describe('block', () => {
+  describe('when a video is correctly blocked', () => {
+    beforeEach(() => {
+      req.params = { videoId: id };
+      videoHandler.updateVideo.mockResolvedValue({ n: 1 });
+    });
+
+    test('should respond successfully', async () => {
+      await videosController.updateBlocked(true)(req, res, next);
+      expect(videoHandler.updateVideo).toHaveBeenCalledWith(id, { is_blocked: true });
+      expect(res.status).toHaveBeenCalledWith(204);
+    });
+  });
+
+  describe('when an inexisten video is updated', () => {
+    beforeEach(() => {
+      req.params = { videoId: id };
+      videoHandler.updateVideo.mockResolvedValue({ n: 0 });
+    });
+
+    test('should respond with error', async () => {
+      await videosController.updateBlocked(true)(req, res, next);
+      expect(videoHandler.updateVideo).toHaveBeenCalledWith(id, { is_blocked: true });
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ reason: 'Video not found' });
+    });
+  });
+});
+
+describe('unblock', () => {
+  describe('when a video is correctly unblocked', () => {
+    beforeEach(() => {
+      req.params = { videoId: id };
+      videoHandler.updateVideo.mockResolvedValue({ n: 1 });
+    });
+
+    test('should respond successfully', async () => {
+      await videosController.updateBlocked(false)(req, res, next);
+      expect(videoHandler.updateVideo).toHaveBeenCalledWith(id, { is_blocked: false });
+      expect(res.status).toHaveBeenCalledWith(204);
+    });
+  });
+
+  describe('when an inexistent video is updated', () => {
+    beforeEach(() => {
+      req.params = { videoId: id };
+      videoHandler.updateVideo.mockResolvedValue({ n: 0 });
+    });
+
+    test('should respond with error', async () => {
+      await videosController.updateBlocked(false)(req, res, next);
+      expect(videoHandler.updateVideo).toHaveBeenCalledWith(id, { is_blocked: false });
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith({ reason: 'Video not found' });
+    });
+  });
+});

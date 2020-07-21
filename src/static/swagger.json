@@ -196,6 +196,62 @@
           }
         }
       }
+    },
+    "/videos/{id}/blocked": {
+      "post": {
+        "tags": [
+          "videos"
+        ],
+        "summary": "Block video by id",
+        "description": "",
+        "operationId": "blockVideoById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Video blocked"
+          },
+          "404": {
+            "description": "Video not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "videos"
+        ],
+        "summary": "Unblock video by id",
+        "description": "",
+        "operationId": "unblockVideoById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Video unblocked"
+          },
+          "404": {
+            "description": "Video not found"
+          }
+        }
+      }
     }
   },
   "components": {
