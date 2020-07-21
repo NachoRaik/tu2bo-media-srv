@@ -218,12 +218,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/HistoricCount"
-                      }
-                    ]
+                    "$ref": "#/components/schemas/HistoricCount"
                   }
                 }
               }
@@ -246,12 +241,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Visibility"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Visibility"
                 }
               }
             }
@@ -272,7 +262,7 @@
         }
       },
       "pathDate": {
-        "in": "path",
+        "in": "query",
         "name": "date",
         "required": true,
         "schema": {
