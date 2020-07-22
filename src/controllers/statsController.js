@@ -37,7 +37,9 @@ module.exports = function statsController(config, statsHandler) {
   const visibilityStats = async (req, res, next) => {
     let countPublicVideos = await statsHandler.currentCount({ visibility: 'public' });
     let countPrivateVideos = await statsHandler.currentCount({ visibility: 'private' });
-    return res.status(200).json({ public: countPublicVideos, private: countPrivateVideos });
+    let countBlockedVideos = await statsHandler.currentCount({ is_blocked: true });
+    
+    return res.status(200).json({ public: countPublicVideos, private: countPrivateVideos, blocked: countBlockedVideos });
   };
 
   return {
