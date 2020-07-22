@@ -64,7 +64,7 @@ module.exports = function videosController(videoHandler) {
       if (count.n === 0) {
         return res.status(404).json({ reason: 'Video not found' });
       }
-      return res.status(204).json(is_blocked ? 'Video blocked' : 'Video unblocked')
+      return res.status(204).send(is_blocked ? 'Video blocked' : 'Video unblocked')
     } catch(err) {
       errorDB(res, err);
     }
