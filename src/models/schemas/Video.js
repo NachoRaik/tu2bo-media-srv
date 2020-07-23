@@ -28,7 +28,11 @@ let videoSchema = mongoose.Schema({
     required: true
   },
   description: String,
-  thumb: String
+  thumb: String,
+  is_blocked: {
+    type: Boolean,
+    default: false
+  }
 });
 videoSchema.plugin(AutoIncrement, {inc_field: 'id'});
 

@@ -57,12 +57,26 @@ module.exports = function videosController(videoHandler) {
       .catch(err => errorDB(res, err));
   };
 
+  const updateBlocked = (is_blocked) => async (req, res, next) => {
+    videoId = req.params.videoId;
+    try {
+      let count = await videoHandler.updateVideo(videoId, { is_blocked });
+      if (count.n === 0) {
+        return res.status(404).json({ reason: 'Video not found' });
+      }
+      return res.status(204).send(is_blocked ? 'Video blocked' : 'Video unblocked')
+    } catch(err) {
+      errorDB(res, err);
+    }
+  }
+
   return {
     add,
     get,
     getSingleVideo,
     update,
-    remove
+    remove,
+    updateBlocked
   };
 };
   

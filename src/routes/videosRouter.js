@@ -13,5 +13,7 @@ module.exports = function videosRouter(statsController) {
       .get('/:videoId', videosController.getSingleVideo)
       .put('/:videoId', bodyValidator.updateValidations, bodyValidator.validate, videosController.update)
       .delete('/:videoId', videosController.remove)
+      .post('/:videoId/blocked', videosController.updateBlocked(true))
+      .delete('/:videoId/blocked', videosController.updateBlocked(false))
   );
 };
