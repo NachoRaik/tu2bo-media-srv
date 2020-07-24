@@ -263,7 +263,10 @@
         "operationId": "getHistoricCount",
         "parameters": [
           {
-            "$ref": "#/components/parameters/pathDate"
+            "$ref": "#/components/parameters/pathInitialDate"
+          },
+          {
+            "$ref": "#/components/parameters/pathFinalDate"
           }
         ],
         "responses": {
@@ -317,9 +320,17 @@
           "minimum": 1
         }
       },
-      "pathDate": {
+      "pathInitialDate": {
         "in": "query",
-        "name": "date",
+        "name": "initial_date",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "pathFinalDate": {
+        "in": "query",
+        "name": "final_date",
         "required": true,
         "schema": {
           "type": "string"

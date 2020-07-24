@@ -24,12 +24,17 @@ module.exports = function statsController(config, statsHandler) {
   };
 
   const videoStats = async (req, res, next) => {
-    let sinceDate = req.query.date;
+    let sinceDate = req.query.initial_date;
+    let finalDate = req.query.final_date;
     if (!sinceDate) {
       sinceDate = new Date();
       sinceDate.setDate(sinceDate.getDate() - config.defaultDaysSince);
     }
-    return statsHandler.getEntriesSince(sinceDate)
+    if (!finalDate) {
+      finalDate = new Date();
+      finalDate.setDate(finalDate.getDate());
+    }
+    return statsHandler.getEntriesSince(sinceDate, finalDate)
       .then(entries => res.status(200).json(entries))
       .catch(err => errorDB(res, err));
   };

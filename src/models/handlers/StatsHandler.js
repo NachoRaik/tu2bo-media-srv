@@ -7,8 +7,8 @@ module.exports = function StatsHandler() {
     return newStat.save();
   };
 
-  const getEntriesSince = async (sinceDate) => {
-    return VideoStat.find({ date: {$gt: sinceDate }}, '-_id -__v');
+  const getEntriesSince = async (sinceDate, finalDate) => {
+    return VideoStat.find({ date: {$gt: sinceDate, $lt: finalDate }}, '-_id -__v');
   };
 
   const getLastEntry = async () => {
