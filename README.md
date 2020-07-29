@@ -1,6 +1,11 @@
 # tu2bo-media-srv
 TúTubo - Media Service
 
+## About
+Tutubo Media Server es el servicio que funciona como CRUD de videos. Es quien alberga la información intrínseca de los videos (como su contenido, autor, fecha de subida, entre otros). 
+
+
+## Development
 
 ## Build y corrida
 
@@ -9,27 +14,31 @@ De cualquiera de ambas formas, se puede probar si el srv esta levantado, haciend
 
 	make ping
 
-#### Plano
+#### Con npm
 
-- `make plain-install`
-- `make plain-run`
-
-Para salir, `ctrl+c`.
+- `make run`
 
 #### Con Docker
 
-- `make build`
-- `make run`
-
-Para salir, hacer `ctrl+c` sobre la consola donde se hizo `make run`.
-
-Other way:
-
+- `docker-compose up --build`, o bien
 - `./run.sh`
 
-## Testing
+En cualquiera de los casos, para salir, hacer `Ctrl+c` sobre la consola donde se ejecuto el comando.
 
-Para testear, por ahora solamente esta incluida la opcion de hacerlo no-containerizado. Para ello, hacer un install y correr test:
+## Tests & Coverage
 
-- `make plain-install`
+Para testear, hacer un install y correr test:
+
+- `make install`
 - `make test`
+
+Junto a la salida de la corrida, estara incluido el reporte de coverage.
+
+### Deployment
+
+Para deployar a Heroku, seguir los siguientes pasos:
+
+1. Loguearse a Heroku (prompt en browser): `heroku login`
+2. Loguearse al registry de Heroku: `heroku container:login`
+3. Buildear y pushear nueva imagen a Heroku: `make heroku-push`
+4. Cambiar instancia para usar la nueva imagen: `make heroku-release`
